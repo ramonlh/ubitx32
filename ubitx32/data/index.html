@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>uBitx Control</title>
+   <link rel="stylesheet" href="styles.css">  
+</head>
+
+<body>
+  <h1>uBitx v6</h1>
+
+  <div class="panel">
+
+    <!-- Fila 1: VFOs -->
+    <div class="fila">
+      <div class="vfo-group-b">
+        <div class="vfob-title">VFO B</div>
+        <div class="value" id="fB">0</div>
+      </div>
+
+      <div class="vfo-group-a">
+        <div class="vfoa-title">VFO A</div>
+		<div class="value" id="fA_digits">
+			<span class="digit" data-index="0">0</span>
+			<span class="digit" data-index="1">0</span>
+			<span class="digit" data-index="2">0</span>
+			.
+			<span class="digit" data-index="3">0</span>
+			<span class="digit" data-index="4">0</span>
+			<span class="digit" data-index="5">0</span>
+			.
+			<span class="digit" data-index="6">0</span>
+			<span class="digit" data-index="7">0</span>
+			<span class="digit" data-index="8">0</span>
+		</div>        
+        
+        <div class="modo-group">
+          <button id="btnSSB" onclick="enviar('ssb', 'TOGGLE')">USB</button>
+          <button id="btnCW" onclick="enviar('cw', 'TOGGLE')">CW</button>
+          <button id="btnxxx" onclick="enviar('xxx', 'TOGGLE')">...</button>
+          <button id="btnba-" onclick="enviar('ba-')">Band-</button>
+          <button id="btnba+" onclick="enviar('ba+')">Band+</button>
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- Fila para las esferas: S-Meter y Potencia -->
+    <div class="fila">
+      <div class="indicadores-container">
+		  
+        <div class="medidor pequeño">
+          <div class="esfera">
+            <canvas id="fondoPwr" width="120" height="60"></canvas>
+            <div class="aguja" id="agujaPwr"></div>
+          </div>
+          <div class="indicador-title">Potencia</div>
+        </div>
+        
+        <div class="medidor grande">
+          <div class="esfera">
+            <canvas id="fondoSMeter" width="200" height="100"></canvas>
+            <div class="aguja" id="agujaSMeter"></div>
+          </div>
+          <div class="indicador-title">S-Meter</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Fila 2: Controles generales -->
+    <div class="fila">
+      <div class="vfo-group-a horizontal">
+        <div><button id="botonVfo" onclick="enviar('vfo', 'A')">VFO A</button></div>
+        <div><button id="botonRit" onclick="enviar('rit', 'TOGGLE')">RIT OFF</button></div>
+        <div><button id="botonSpl" onclick="enviar('spl', 'TOGGLE')">SPLIT OFF</button></div>
+        <div><button id="botonLock" onclick="enviar('lock', 'TOGGLE')">LOCK</button></div>
+        <div><a href="/sd"><button>Config</button></a></div>
+      </div>
+    </div>
+
+    <!-- Fila 3: Estado general -->
+    <div class="fila">
+      <div class="vfo-group-a horizontal estado-panel">
+        <div class="estado-card">
+          <div class="estado-title">Voltaje</div>
+          <div class="estado-value" id="volt">-- V</div>
+        </div>
+        <div class="estado-card">
+          <div class="estado-title">Corriente</div>
+          <div class="estado-value" id="curr">-- A</div>
+        </div>
+        <div class="estado-card">
+          <div class="estado-title">Tr.1</div>
+          <div class="estado-value" id="temp1">-- °C</div>
+        </div>
+        <div class="estado-card">
+          <div class="estado-title">Tr. 2</div>
+          <div class="estado-value" id="temp2">-- °C</div>
+        </div>
+        <div class="estado-card">
+          <div class="estado-title">Reg. 5v</div>
+          <div class="estado-value" id="temp3">-- °C</div>
+        </div>
+        <div class="estado-card">
+          <div class="estado-title">SWR</div>
+          <div class="estado-value" id="swr">--</div>
+        </div>
+
+        <!-- NUEVO: Día y hora -->
+        <div class="estado-card full-width">
+          <div class="estado-title-value"><span class="estado-value" id="fechaHora">--:--:--</span>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+  </div>
+
+  <div id="estado">Esperando conexión...</div>
+
+  <script src="script.js"></script>  
+</body>
+</html>

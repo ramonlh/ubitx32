@@ -1,0 +1,115 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+	<meta charset="UTF-8">
+    <title>uBitxWebServer</title>
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <style type="text/css">
+      a:link { text-decoration: none; }
+      table.m {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 11pt;
+        border-collapse: collapse;
+      }
+      table.m th {
+        border-width: 2px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #FDFF9A;
+      }
+      table.m td {
+        border-width: 2px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #dedede;
+      }
+
+      table.n {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 11pt;
+        border-collapse: collapse;
+        text-align: left;
+      }
+      table.n th {
+        border-style: solid;
+        border-color: #666666;
+        border-width: 2px;
+        padding: 4px;
+        background-color: #FFFF00;
+      }
+      table.n td {
+        border-style: solid;
+        border-color: #666666;
+        border-width: 2px;
+        padding: 4px;
+        background-color: #DEDEDE;
+      }
+    </style>
+  </head>
+  <body>
+    <table class="m">
+      <tr>
+        <td><a href="p">Panel</a></td>
+        <th>Configuración</th>
+        <td><a href="es">Sistema</a></td>
+      </tr>
+    </table>
+
+    <table class="m">
+      <tr>
+        <td><a href="sd">Dispositivo</a></td>
+        <td><a href="sb">Bandas</a></td>
+        <td><a href="sm">Memorias</a></td>
+        <td><a href="cw">CW</a></td>
+        <th>S-meter</th>
+        <td><a href="sne">Red</a></td>
+        <td><a href="sns">Serv. Red</a></td>
+        <td><a href="sio">Sondas temp.</a></td>
+      </tr>
+    </table>
+    <br>
+    <form action="sme" method="post">
+      <table class="n">
+        <tr>
+          <td>Min. / Max.</td>
+          <td>3912 / 13761</td>
+        </tr>
+        <tr>
+          <td>Modo</td>
+          <td>
+            <select name="35">
+              <option value="0" selected>Lineal</option>
+              <option value="1">Real</option>
+              <option value="2">User defined</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Valor</td>
+          <td>ADC Valor</td>
+        </tr>
+
+        <tr></tr><td>0</td><td><input type="text/text" name="0" value="%V0%" maxlength="10" size="10" /></td></tr>
+        <tr><td>1</td><td><input type="text/text" name="1" value="%V1%" maxlength="10" size="10" /></td></tr>
+        <tr><td>2</td><td><input type="text/text" name="2" value="%V2%" maxlength="10" size="10" /></td></tr>
+        <tr><td>3</td><td><input type="text/text" name="3" value="%V3%" maxlength="10" size="10" /></td></tr>
+        <tr><td>4</td><td><input type="text/text" name="4" value="%V4%" maxlength="10" size="10" /></td></tr>
+        <tr><td>5</td><td><input type="text/text" name="5" value="%V5%" maxlength="10" size="10" /></td></tr>
+        <tr><td>6</td><td><input type="text/text" name="6" value="%V6%" maxlength="10" size="10" /></td></tr>
+        <tr><td>7</td><td><input type="text/text" name="7" value="%V7%" maxlength="10" size="10" /></td></tr>
+        <tr><td>8</td><td><input type="text/text" name="8" value="%V8%" maxlength="10" size="10" /></td></tr>
+        <tr><td>9</td><td><input type="text/text" name="9" value="%V9%" maxlength="10" size="10" /></td></tr>
+        <tr><td>10</td><td><input type="text/text" name="10" value="%V10%" maxlength="10" size="10" /></td></tr>
+        <tr><td>11</td><td><input type="text/text" name="11" value="%V11%" maxlength="10" size="10" /></td></tr>
+        <tr><td>12</td><td><input type="text/text" name="12" value="%V12%" maxlength="10" size="10" /></td></tr>
+        <tr><td>13</td><td><input type="text/text" name="13" value="%V13%" maxlength="10" size="10" /></td>
+        <tr><td>14</td><td><input type="text/text" name="14" value="%V14%" maxlength="10" size="10" /></td></tr>
+        <tr><td>15</td><td><input type="text/text" name="15" value="%V15%" maxlength="10" size="10" /></td></tr>
+
+      </table>
+      <input type="submit" value="Guardar"/>
+    </form>
+  </body>
+</html>

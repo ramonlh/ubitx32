@@ -1,0 +1,263 @@
+
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+      }
+    h1 {
+      text-align: center;
+      color: #333;
+      }
+    .panel {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 10px;
+      }
+    .vfo-group-a {
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      width: 400px;
+	  background-color: green;
+      }
+    .vfo-group-b {
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      width: 200px;
+      background-color: #3498db;
+      }
+
+    .vfoa-title {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      text-align: left;
+      color: #2c3e50;
+      font-weight: bold;
+	  color: white;
+      }
+    .vfob-title {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      text-align: left;
+      color: #2c3e50;
+      font-weight: bold;
+	  color: black;
+      }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 5px;
+      margin-bottom: 5px;
+      text-align: center;
+      width: 160px;
+      }
+
+    .title {
+      font-size: 1.1em;
+      color: #555;
+      margin-bottom: 10px;
+      }
+    .value {
+      font-size: 2em;
+      color: #2c3e50;
+      font-weight: bold;
+      }
+
+    button {
+      font-size: 1.1em;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #3498db;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      }
+
+    button:hover {
+      background-color: #2980b9;
+      }
+
+    #estado {
+      text-align: center;
+      margin-top: 30px;
+      font-style: italic;
+      color: #777;
+      }
+
+    /* Alineación horizontal de los controles generales */
+    .vfo-group-a.horizontal {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 5px;
+      flex-wrap: wrap;
+      width: 620px;
+      background-color: #d0d0d0;
+
+    }
+
+    .vfo-group-a.horizontal .card {
+      width: 150px;
+      margin: 10px;
+      }
+
+    .fila {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      margin-top: 5px;
+      }
+
+    .estado-panel {
+      background-color: #d0d0d0;
+      padding: 5px;
+      border-radius: 12px;
+      }
+
+    .estado-card {
+      background-color: #b0b0b0;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      padding: 5px;
+      margin: 3px;
+      text-align: center;
+      width: 80px;
+      }
+
+    .estado-title {
+      font-size: 0.9em;
+      color: #333;
+      margin-bottom: 6px;
+      }
+
+    .estado-value {
+      font-size: 1.1em;
+      color: #222;
+      font-weight: bold;
+      }
+
+    /* Contenedor para las esferas */
+    .fila.indicadores {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      width: 80px;
+      }
+
+    .indicadores-container {
+      display: flex;
+      justify-content: space-around;
+      gap: 20px;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      background-color: #d1ecf1;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      width: 620px;
+    }
+
+    .medidor {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .esfera {
+      position: relative;
+      background: #c8d8e4;
+      border: 2px solid #555;
+      overflow: hidden;
+      border-top-left-radius: 200px;
+      border-top-right-radius: 200px;
+      }
+
+    .esfera .text {
+      color: #333;
+      font-weight: bold;
+      }
+
+    .medidor.grande .esfera {
+      width: 200px;
+      height: 100px;
+      }
+
+    .medidor.pequeño .esfera {
+      width: 120px;
+      height: 60px;
+      border-top-left-radius: 120px;
+      border-top-right-radius: 120px;
+      }
+
+    .indicador-title {
+      font-size: 1em;
+      color: #2c3e50;
+      margin-top: 5px;
+      }
+      
+	/* Estilo para las agujas */
+   .aguja {
+		width: 3px;
+		background-color: blue;
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: rotate(0deg);
+		transform-origin: bottom center;
+		transition: transform 0.2s ease-out;
+		}
+
+	#agujaSMeter { height: 80px;}
+
+	#agujaPwr { height: 50px; } 
+	      
+    #fA { 
+		font-size: 4em; 
+		text-align: right;
+      	}    
+	#fA_digits { 
+		font-size: 3em; /* Mantienes el tamaño grande */
+		text-align: right; /* Alineación a la derecha */
+		display: flex; /* Usamos flexbox para organizar los dígitos */
+		justify-content: flex-end; /* Alinea los dígitos hacia la derecha */
+		gap: 5px; /* Elimina cualquier espacio entre los dígitos */
+		color: yellow;
+		}
+    #fB { 
+		font-size: 2em; 
+		text-align: right;
+      	}
+
+.digit {
+    display: inline-block;
+    margin: 0 1px;
+    cursor: pointer;
+    letter-spacing: -2px; /* << ESTA ES LA CLAVE */
+}
+
+.estado-card.full-width {
+  flex: 1 1 100%;
+  display: flex;
+  justify-content: flex-end; /* Alinea a la derecha */
+  align-items: center;
+  padding: 5px 10px;
+}
+
+#fechaHora {
+  font-weight: normal;
+  font-size: 1em;
+  color: #222;
+}
+
+

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>uBitxWebServer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style type="text/css">
+    a:link { text-decoration: none; }
+
+    table.m {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11pt;
+      border-collapse: collapse;
+    }
+    table.m th {
+      border-width: 2px;
+      padding: 8px;
+      border-style: solid;
+      border-color: #666666;
+      background-color: #FDFF9A;
+    }
+    table.m td {
+      border-width: 2px;
+      padding: 8px;
+      border-style: solid;
+      border-color: #666666;
+      background-color: #dedede;
+    }
+
+    table.n {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11pt;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    table.n th, table.n td {
+      border-style: solid;
+      border-color: #666666;
+      border-width: 2px;
+      padding: 4px;
+      background-color: #DEDEDE;
+    }
+  </style>
+</head>
+
+<body>
+  <table class="m">
+    <tr>
+      <td><a href="p">Panel</a></td>
+      <th>Configuración</th>
+      <td><a href="es">Sistema</a></td>
+    </tr>
+  </table>
+
+  <table class="m">
+    <tr>
+      <th>Dispositivo</th>
+      <td><a href="sb">Bandas</a></td>
+      <td><a href="sm">Memorias</a></td>
+      <td><a href="cw">CW</a></td>
+      <td><a href="sme">S-meter</a></td>
+      <td><a href="sne">Red</a></td>
+      <td><a href="sns">Serv. Red</a></td>
+      <td><a href="sio">Sondas temp.</a></td>
+    </tr>
+  </table>
+
+  <br />
+
+  <form action="sd" method="post">
+    <table class="n">
+
+      <tr>
+        <td>Indicativo</td>
+        <td><input type="text" name="0" value="EA4GZI" maxlength="18" size="18" /></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Calibración / usbCarrier</td>
+        <td><input type="text" name="1" value="180000" maxlength="9" size="9" /></td>
+        <td><input type="text" name="2" value="11056000" maxlength="9" size="9" /></td>
+      </tr>
+
+      <tr>
+        <td><a href="http://www.google.es/maps" target="_blank">Latitud / Longitud</a></td>
+        <td><input type="text" name="3" value="11056000.000000" maxlength="10" size="10" /></td>
+        <td><input type="text" name="4" value="0.000000" maxlength="10" size="10" /></td>
+      </tr>
+
+      <tr>
+        <td>Idioma / Zona horaria</td>
+        <td>
+          <select name="5">
+            <option value="0" selected>Español</option>
+            <option value="1">English</option>
+            <option value="2">Deutsch</option>
+          </select>
+        </td>
+        <td>
+          UTC
+          <select name="24">
+            <option value="0">-12</option>
+            <option value="1" selected>-11</option>
+            <option value="2">-10</option>
+            <option value="3">-9:30</option>
+            <option value="4">-9</option>
+            <option value="5">-8</option>
+            <option value="6">-7</option>
+            <option value="7">-6</option>
+            <option value="8">-5</option>
+            <option value="9">-4</option>
+            <option value="10">-3</option>
+            <option value="11">-2</option>
+            <option value="12">-1</option>
+            <option value="13">0</option>
+            <option value="14">+1</option>
+            <option value="15">+2</option>
+            <option value="16">+3</option>
+            <option value="17">+3:30</option>
+            <option value="18">+4</option>
+            <option value="19">+4:30</option>
+            <option value="20">+5</option>
+            <option value="21">+5:30</option>
+            <option value="22">+6</option>
+            <option value="23">+7</option>
+            <option value="24">+8</option>
+            <option value="25">+9</option>
+            <option value="26">+9:30</option>
+            <option value="27">+10</option>
+            <option value="28">+11</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td>S-medidor / ROE-medidor</td>
+        <td><input type="checkbox" name="20" value="1" /></td>
+        <td><input type="checkbox" name="21" value="1" /></td>
+      </tr>
+
+      <tr>
+        <td>DS18B20 / ATU ZM-2</td>
+        <td><input type="checkbox" name="22" value="1" /></td>
+        <td><input type="checkbox" name="23" value="1" /></td>
+      </tr>
+
+      <tr>
+        <td>ATU tiempo (s) / Iteraciones ADC</td>
+        <td><input type="text" name="12" value="3" maxlength="5" size="5" /></td>
+        <td><input type="text" name="17" value="1" maxlength="5" size="5" /></td>
+      </tr>
+
+      <tr>
+        <td>ATU Factor / Offset</td>
+        <td><input type="text" name="13" value="0.000000" maxlength="10" size="10" /></td>
+        <td><input type="text" name="14" value="0.000000" maxlength="10" size="10" /></td>
+      </tr>
+
+      <tr>
+        <td>Si5351 Addr</td>
+        <td><input type="text" name="9" value="96" maxlength="5" size="5" /></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Rango Scan / Rango TX</td>
+        <td>
+          <select name="10">
+            <option value="0" selected>Ham bands</option>
+            <option value="1">All range</option>
+          </select>
+        </td>
+        <td>
+          <select name="11">
+            <option value="0" selected>Ham bands</option>
+            <option value="1">All range</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Modo Scan / Retardo Resume</td>
+        <td>
+          <select name="18">
+            <option value="0" selected>No Stop</option>
+            <option value="1">Stop-resume</option>
+            <option value="2">Stop</option>
+          </select>
+        </td>
+        <td><input type="text" name="19" value="3" maxlength="5" size="5" /></td>
+      </tr>
+
+      <tr>
+        <td>Temp. alarma °C / OFF TX °C</td>
+        <td><input type="text" name="15" value="45" maxlength="5" size="5" /></td>
+        <td><input type="text" name="16" value="50" maxlength="5" size="5" /></td>
+      </tr>
+
+      <tr>
+        <td>Reset periódico (h)</td>
+        <td>
+          <select name="99">
+            <option value="0" selected>OFF</option>
+            <option value="1">1</option>
+            <option value="24">24</option>
+          </select>
+        </td>
+        <td></td>
+      </tr>
+
+    </table>
+
+    <input type="submit" value="Guardar" />
+  </form>
+</body>
+</html>
+

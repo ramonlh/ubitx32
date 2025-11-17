@@ -1,0 +1,146 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+	<meta charset="UTF-8">
+    <title>uBitxWebServer</title>
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+
+    <style type="text/css">
+      a:link {
+        text-decoration: none;
+      }
+
+      table.m {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 11pt;
+        border-collapse: collapse;
+      }
+
+      table.m th {
+        border-width: 2px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #FDFF9A;
+      }
+
+      table.m td {
+        border-width: 2px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #dedede;
+      }
+
+      table.n {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 11pt;
+        border-collapse: collapse;
+        text-align: left;
+      }
+
+      table.n th {
+        border-style: solid;
+        border-color: #666666;
+        border-width: 2px;
+        padding: 4px;
+        background-color: #FFFF00;
+      }
+
+      table.n td {
+        border-style: solid;
+        border-color: #666666;
+        border-width: 2px;
+        padding: 4px;
+        background-color: #DEDEDE;
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+      function gt(n) {
+        $.ajax({
+          url: 'tt',
+          success: function(result) {
+            $('#tt').html(result);
+          }
+        });
+      }
+
+      function gf(n) {
+        $.ajax({
+          url: 'f' + n,
+          success: function(result) {
+            $('#f' + n).html(result);
+          }
+        });
+      }
+
+      function gl(n) {
+        $.ajax({
+          url: 'l' + n,
+          success: function(result) {
+            $('#l' + n).html(result);
+          }
+        });
+      }
+
+      function chf() {
+        for (i = 7; i < 8; i++) {
+          gf(i);
+        }
+        setTimeout(function() {
+          chf();
+        }, 100);
+      }
+
+      function ch() {
+        gt(0);
+        for (i = 0; i < 7; i++) {
+          gl(i);
+        }
+        setTimeout(function() {
+          ch();
+        }, 1000);
+      }
+
+      chf();
+      ch();
+    </script>
+  </head>
+
+  <body>
+    <table class="m">
+      <tr>
+        <td><a href="p">Panel</a></td>
+        <td><a href="sd">Configuración</a></td>
+        <th>Sistema</th>
+      </tr>
+    </table>
+
+    <table class="m">
+      <tr>
+        <td><a href="es">Estado</a></td>
+        <th>Ficheros</th>
+        <td><a href="ss">Seguridad</a></td>
+        <td><a href="firm">Actualizar</a></td>
+        <td><a href="rs">Reset</a></td>
+      </tr>
+    </table>
+
+    <br />
+    Use FTP o "Sketch Data Upload"
+
+    <table class="n">
+      <tr><td><a href="dw?f=/spanish.txt">/spanish.txt</a></td><td>6298</td></tr>
+      <tr><td><a href="dw?f=/english.txt">/english.txt</a></td><td>6301</td></tr>
+      <tr><td><a href="dw?f=/head.txt">/head.txt</a></td><td>512</td></tr>
+      <tr><td><a href="dw?f=/ubitx.mem">/ubitx.mem</a></td><td>4000</td></tr>
+      <tr><td><a href="dw?f=/dash.txt">/dash.txt</a></td><td>12579</td></tr>
+      <tr><td><a href="dw?f=/ajax.txt">/ajax.txt</a></td><td>512</td></tr>
+      <tr><td><a href="dw?f=/ubitx.cnf">/ubitx.cnf</a></td><td>1520</td></tr>
+      <tr><td><a href="dw?f=/german.txt">/german.txt</a></td><td>6223</td></tr>
+      <tr><td><a href="dw?f=/common.txt">/common.txt</a></td><td>14698</td></tr>
+    </table>
+  </body>
+</html>

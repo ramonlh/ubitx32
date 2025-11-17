@@ -1,0 +1,188 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>uBitxWebServer</title>
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="Content-Type" content="text/html;" />
+  <style type="text/css">
+    a:link { text-decoration: none; }
+    table.m {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11pt;
+      border-collapse: collapse;
+    }
+    table.m th {
+      border-width: 2px;
+      padding: 8px;
+      border-style: solid;
+      border-color: #666666;
+      background-color: #FDFF9A;
+    }
+    table.m td {
+      border-width: 2px;
+      padding: 8px;
+      border-style: solid;
+      border-color: #666666;
+      background-color: #dedede;
+    }
+    table.n {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11pt;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    table.n th {
+      border-style: solid;
+      border-color: #666666;
+      border-width: 2px;
+      padding: 4px;
+      background-color: #FFFF00;
+    }
+    table.n td {
+      border-style: solid;
+      border-color: #666666;
+      border-width: 2px;
+      padding: 4px;
+      background-color: #DEDEDE;
+    }
+  </style>
+</head>
+
+<body>
+  <table class="m">
+    <tr>
+      <td><a href="p">Panel</a></td>
+      <th>Configuración</th>
+      <td><a href="es">Sistema</a></td>
+    </tr>
+  </table>
+
+  <table class="m">
+    <tr>
+      <td><a href="sd">Dispositivo</a></td>
+      <td><a href="sb">Bandas</a></td>
+      <td><a href="sm">Memorias</a></td>
+      <td><a href="cw">CW</a></td>
+      <td><a href="sme">S-meter</a></td>
+      <th>Red</th>
+      <td><a href="sns">Serv. Red</a></td>
+      <td><a href="sio">Sondas temp.</a></td>
+    </tr>
+  </table>
+
+  <br/>
+
+  <form action="sne" method="post">
+    <table class="n">
+      <tr>
+        <td>Auto Conn.</td>
+        <td><input type="checkbox" name="57" value="1" %auto_conn%></td>
+      </tr>
+      <tr>
+        <td>Modo</td>
+        <td>
+          <select name="41">
+            <option value="0" %modo_0%>OFF</option>
+            <option value="1" %modo_1%>STA</option>
+            <option value="2" %modo_2%>AP</option>
+            <option value="3" %modo_3%>AP+STA</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>STA mode SSID</td>
+        <td>
+          <input type="text" name="42" value="%ssid_sta%" maxlength="19" size="19">
+          <a href="sc"> Scan</a>
+        </td>
+      </tr>
+      <tr>
+        <td>STA mode Password</td>
+        <td><input type="text" name="43" value="%password_sta%" maxlength="19" size="19"></td>
+      </tr>
+      <tr>
+        <td>AP mode SSID</td>
+        <td>%ssid_ap%</td>
+      </tr>
+      <tr>
+        <td>AP mode Password</td>
+        <td><input type="text" name="45" value="%password_ap%" maxlength="8" size="8"></td>
+      </tr>
+      <tr>
+        <td>Canal</td>
+        <td>
+          <select name="56">
+            <option value="0" %canal_0%>1</option>
+            <option value="1" %canal_1%>2</option>
+            <option value="2" %canal_2%>3</option>
+            <option value="3" %canal_3%>4</option>
+            <option value="4" %canal_4%>5</option>
+            <option value="5" %canal_5%>6</option>
+            <option value="6" %canal_6%>7</option>
+            <option value="7" %canal_7%>8</option>
+            <option value="8" %canal_8%>9</option>
+            <option value="9" %canal_9%>10</option>
+            <option value="10" %canal_10%>11</option>
+            <option value="11" %canal_11%>12</option>
+            <option value="12" %canal_12%>13</option>
+          </select>
+        </td>
+      </tr>
+      <tr><td colspan="2"></td></tr>
+      <tr>
+        <td>MAC</td>
+        <td>%mac%</td>
+      </tr>
+      <tr>
+        <td>IP estática</td>
+        <th><input type="checkbox" name="46" value="1" %static_ip%></th>
+      </tr>
+      <tr>
+        <td>Dir. IP</td>
+        <td>%dir_ip%</td>
+      </tr>
+      <tr>
+        <td>IP</td>
+        <td>
+          <input type="text" name="6" value="%ip0%" maxlength="3" size="3">
+          <input type="text" name="7" value="%ip1%" maxlength="3" size="3">
+          <input type="text" name="8" value="%ip2%" maxlength="3" size="3">
+          <input type="text" name="9" value="%ip3%" maxlength="3" size="3" disabled>
+        </td>
+      </tr>
+      <tr>
+        <td>Mask</td>
+        <td>
+          <input type="text" name="10" value="%mk0%" maxlength="3" size="3">
+          <input type="text" name="11" value="%mk1%" maxlength="3" size="3">
+          <input type="text" name="12" value="%mk2%" maxlength="3" size="3">
+          <input type="text" name="13" value="%mk3%" maxlength="3" size="3">
+        </td>
+      </tr>
+      <tr>
+        <td>Gateway</td>
+        <td>
+          <input type="text" name="14" value="%gw0%" maxlength="3" size="3">
+          <input type="text" name="15" value="%gw1%" maxlength="3" size="3">
+          <input type="text" name="16" value="%gw2%" maxlength="3" size="3">
+          <input type="text" name="17" value="%gw3%" maxlength="3" size="3">
+        </td>
+      </tr>
+      <tr>
+        <td>DNS</td>
+        <td>
+          <input type="text" name="18" value="%dns0%" maxlength="3" size="3">
+          <input type="text" name="19" value="%dns1%" maxlength="3" size="3">
+          <input type="text" name="20" value="%dns2%" maxlength="3" size="3">
+          <input type="text" name="21" value="%dns3%" maxlength="3" size="3">
+        </td>
+      </tr>
+      <tr>
+        <td>IP pública</td>
+        <td>%public_ip%</td>
+      </tr>
+    </table>
+    <input type="submit" value="Guardar">
+  </form>
+</body>
+</html>

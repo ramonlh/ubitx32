@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>uBitxWebServer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  <style type="text/css">
+    a:link {
+      text-decoration: none;
+    }
+    table.m {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11pt;
+      border-collapse: collapse;
+    }
+    table.m th {
+      border-width: 2px;
+      padding: 8px;
+      border-style: solid;
+      border-color: #666666;
+      background-color: #fdff9a;
+    }
+    table.m td {
+      border-width: 2px;
+      padding: 8px;
+      border-style: solid;
+      border-color: #666666;
+      background-color: #dedede;
+    }
+
+    table.n {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11pt;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    table.n th {
+      border-style: solid;
+      border-color: #666666;
+      border-width: 2px;
+      padding: 4px;
+      background-color: #ffff00;
+    }
+    table.n td {
+      border-style: solid;
+      border-color: #666666;
+      border-width: 2px;
+      padding: 4px;
+      background-color: #dedede;
+    }
+  </style>
+</head>
+<body>
+  <table class="m">
+    <tr>
+      <td><a href="p">Panel</a></td>
+      <th>Configuración</th>
+      <td><a href="es">Sistema</a></td>
+    </tr>
+  </table>
+  <table class="m">
+    <tr>
+      <td><a href="sd">Dispositivo</a></td>
+      <td><a href="sb">Bandas</a></td>
+      <th>Memorias</th>
+      <td><a href="cw">CW</a></td>
+      <td><a href="sme">S-meter</a></td>
+      <td><a href="sne">Red</a></td>
+      <td><a href="sns">Serv. Red</a></td>
+      <td><a href="sio">Sondas temp.</a></td>
+    </tr>
+  </table>
+  <br />
+  <form action="sm" method="post">
+    <table class="n">
+      <tr>
+        <td colspan="7"></td>
+        <td colspan="2">RIT</td>
+        <td colspan="4">SPLIT</td>
+      </tr>
+      <tr>
+        <td>Canal</td>
+        <td>Act.</td>
+        <td>Descr.</td>
+        <td>Frec.</td>
+        <td>BLU Modo</td>
+        <td>CW Modo</td>
+        <td>OFV</td>
+        <td>En.</td>
+        <td>TX Frec.</td>
+        <td>En.</td>
+        <td>TX Frec.</td>
+        <td>TX Modo</td>
+        <td>CW</td>
+      </tr>
+
+      <!--@@MEMORY_ROWS@@-->
+
+    </table>
+    <input type="submit" value="Guardar" />
+  </form>
+</body>
+</html>

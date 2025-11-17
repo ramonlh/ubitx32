@@ -1,0 +1,135 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>uBitxWebServer</title>
+  <meta name="viewport" content="width=device-width initial-scale=1"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+
+  <style type="text/css">
+    a:link { text-decoration: none; }
+
+    table.m {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11pt;
+      border-collapse: collapse;
+      }
+    table.m th {
+      border-width: 2px;
+      padding: 8px;
+      border-style: solid;
+      border-color: #666666;
+      background-color: #FDFF9A;
+      }
+    table.m td {
+      border-width: 2px;
+      padding: 8px;
+      border-style: solid;
+      border-color: #666666;
+      background-color: #dedede;
+      }
+    table.n {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11pt;
+      border-collapse: collapse;
+      text-align: left;
+      }
+    table.n th {
+      border-style: solid;
+      border-color: #666666;
+      border-width: 2px;
+      padding: 4px;
+      background-color: #FFFF00;
+      }
+    table.n td {
+      border-style: solid;
+      border-color: #666666;
+      border-width: 2px;
+      padding: 4px;
+      background-color: #DEDEDE;
+    }
+  </style>
+
+</head>
+
+<body>
+  <table class="m">
+    <tr>
+      <td><a href="p">Panel</a></td>
+      <th>ConfiguraciÃ³n</th>
+      <td><a href="es">Sistema</a></td>
+    </tr>
+  </table>
+
+  <table class="m">
+    <tr>
+      <td><a href="sd">Dispositivo</a></td>
+      <td><a href="sb">Bandas</a></td>
+      <td><a href="sm">Memorias</a></td>
+      <td><a href="cw">CW</a></td>
+      <td><a href="sme">S-meter</a></td>
+      <td><a href="sne">Red</a></td>
+      <th>Serv. Red</th>
+      <td><a href="sio">Sondas temp.</a></td>
+    </tr>
+  </table>
+
+  <br />
+
+<form action="sns" method="post">
+  <table class="n">
+    <tr>
+      <td>Servidor IP pública</td>
+      <td></td>
+      <td colspan="2"><input type="text" name="0" value="%IPPUB%" maxlength="29" size="29"></td>
+    </tr>
+    <tr>
+      <td>FTP server</td>
+      <td><input type="checkbox" name="1" value="1" %FTPCHK%></td>
+      <td colspan="2">Puerto 21</td>
+    </tr>
+    <tr>
+      <td>Servidor TCP</td>
+      <td><input type="checkbox" name="2" value="1" %TCPCHK%></td>
+      <td colspan="2">Puerto 8084</td>
+    </tr>
+    <tr>
+      <td>Servidor UDP</td>
+      <td><input type="checkbox" name="3" value="1" %UDPCHK%></td>
+      <td colspan="2">Puerto 8085</td>
+    </tr>
+    <tr>
+      <td>Servidor WS</td>
+      <td><input type="checkbox" name="4" value="1" %WSCHK%></td>
+      <td colspan="2">Puerto 8086</td>
+    </tr>
+    <tr>
+      <td>Servidor Web</td>
+      <td><input type="checkbox" name="5" value="1" %WEBCHK%></td>
+      <td colspan="2">Puerto 8088</td>
+    </tr>
+    <tr>
+      <td>MQTT Server</td>
+      <td><input type="checkbox" name="6" value="1" %MQCHK%></td>
+      <td colspan="2"><input type="text" name="7" value="%MQSVR%" maxlength="39" size="39"></td>
+    </tr>
+    <tr>
+      <td colspan="2">MQTT path</td>
+      <td><input type="text" name="8" value="%MQP1%" maxlength="9" size="9">/</td>
+      <td><input type="text" name="9" value="%MQP2%" maxlength="9" size="9">/</td>
+    </tr>
+    <tr>
+      <td colspan="2"></td>
+      <td><input type="text" name="10" value="%MQP3%" maxlength="9" size="9">/</td>
+      <td><input type="text" name="11" value="%MQP4%" maxlength="9" size="9">/</td>
+    </tr>
+    <tr>
+      <td colspan="2"></td>
+      <td><input type="text" name="12" value="%MQP5%" maxlength="9" size="9">/</td>
+      <td><input type="text" name="13" value="%MQP6%" maxlength="9" size="9">/</td>
+    </tr>
+  </table>
+  <input type="submit" value="Guardar/Exportar">
+</form>
+
+</body>
+</html>
