@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>uBitx Control</title>
+  <style>
+    /* Tipografía y estilo general */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1f1f1f;
+      color: #e0e0e0;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 20px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #00ffd0;
+      text-shadow: 0 0 5px #00ffd0;
+    }
+
+    .panel {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      display: grid;
+      grid-gap: 20px;
+    }
+
+    .fila {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* VFOs */
+    .vfo-group-a, .vfo-group-b {
+      background: #292929;
+      padding: 15px 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      text-align: center;
+      min-width: 180px;
+    }
+
+    .vfoa-title, .vfob-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 1.1em;
+    }
+
+    .value {
+      font-size: 1.8em;
+      margin-bottom: 15px;
+      color: #00ffd0;
+    }
+
+    .digit {
+      display: inline-block;
+      width: 1em;
+      text-align: center;
+    }
+
+    /* Botones */
+    button {
+      background: linear-gradient(145deg, #222, #333);
+      color: #00ffd0;
+      border: none;
+      padding: 8px 15px;
+      margin: 5px 3px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: linear-gradient(145deg, #00ffd0, #00a890);
+      color: #1f1f1f;
+      box-shadow: 0 0 10px #00ffd0;
+    }
+
+    .modo-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Medidores */
+    .indicadores-container {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .medidor {
+      background: #292929;
+      border-radius: 20px;
+      padding: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    .medidor.pequeño { width: 150px; }
+    .medidor.grande { width: 250px; }
+
+    .indicador-title {
+      margin-top: 10px;
+      font-weight: 600;
+      color: #00ffd0;
+    }
+
+    /* Controles generales */
+    .horizontal { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+
+    /* Estado general */
+    .estado-panel {
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .estado-card {
+      background: #292929;
+      padding: 15px 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .estado-title {
+      font-weight: 500;
+      font-size: 0.9em;
+      color: #aaaaaa;
+    }
+
+    .estado-value {
+      font-weight: 600;
+      font-size: 1.2em;
+      margin-top: 5px;
+      color: #00ffd0;
+    }
+
+    .full-width {
+      flex: 1 1 100%;
+    }
+
+    #estado {
+      text-align: center;
+      margin: 20px 0;
+      font-style: italic;
+      color: #888;
+    }
+
+    /* Responsive */
+    @media(max-width: 768px) {
+      .fila { flex-direction: column; align-items: center; }
+      .medidor { width: 80%; }
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>uBitx v6</h1>
+
+  <div class="panel">
+
+    <div class="fila">
+      <div class="vfo-group-b">
+        <div class="vfob-title">VFO B</div>
+        <div class="value" id="fB">0</div>
+      </div>
+
+      <div class="vfo-group-a">
+        <div class="vfoa-title">VFO A</div>
+        <div class="value" id="fA_digits">
+          <span class="digit" data-index="0">0</span>
+          <span class="digit" data-index="1">0</span>
+          <span class="digit" data-index="2">0</span>
+          .
+          <span class="digit" data-index="3">0</span>
+          <span class="digit" data-index="4">0</span>
+          <span class="digit" data-index="5">0</span>
+          .
+          <span class="digit" data-index="6">0</span>
+          <span class="digit" data-index="7">0</span>
+          <span class="digit" data-index="8">0</span>
+        </div>
+        <div class="modo-group">
+          <button id="btnSSB" onclick="enviar('ssb', 'TOGGLE')">USB</button>
+          <button id="btnCW" onclick="enviar('cw', 'TOGGLE')">CW</button>
+          <button id="btnxxx" onclick="enviar('xxx', 'TOGGLE')">...</button>
+          <button id="btnba-" onclick="enviar('ba-')">Band-</button>
+          <button id="btnba+" onclick="enviar('ba+')">Band+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="fila">
+      <div class="indicadores-container">
+        <div class="medidor pequeño">
+          <canvas id="fondoPwr" width="120" height="60"></canvas>
+          <div class="indicador-title">Potencia</div>
+        </div>
+        <div class="medidor grande">
+          <canvas id="fondoSMeter" width="200" height="100"></canvas>
+          <div class="indicador-title">S-Meter</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fila horizontal">
+      <button id="botonVfo" onclick="enviar('vfo', 'A')">VFO A</button>
+      <button id="botonRit" onclick="enviar('rit', 'TOGGLE')">RIT OFF</button>
+      <button id="botonSpl" onclick="enviar('spl', 'TOGGLE')">SPLIT OFF</button>
+      <button id="botonLock" onclick="enviar('lock', 'TOGGLE')">LOCK</button>
+      <a href="/sd"><button>Config</button></a>
+    </div>
+
+    <div class="fila estado-panel">
+      <div class="estado-card">
+        <div class="estado-title">Voltaje</div>
+        <div class="estado-value" id="volt">-- V</div>
+      </div>
+      <div class="estado-card">
+        <div class="estado-title">Corriente</div>
+        <div class="estado-value" id="curr">-- A</div>
+      </div>
+      <div class="estado-card">
+        <div class="estado-title">Tr.1</div>
+        <div class="estado-value" id="temp1">-- °C</div>
+      </div>
+      <div class="estado-card">
+        <div class="estado-title">Tr.2</div>
+        <div class="estado-value" id="temp2">-- °C</div>
+      </div>
+      <div class="estado-card">
+        <div class="estado-title">Reg. 5v</div>
+        <div class="estado-value" id="temp3">-- °C</div>
+      </div>
+      <div class="estado-card">
+        <div class="estado-title">SWR</div>
+        <div class="estado-value" id="swr">--</div>
+      </div>
+      <div class="estado-card full-width">
+        <div class="estado-value" id="fechaHora">--:--:--</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="estado">Esperando conexión...</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>uBitx Futurista</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0f0f0f;
+    color: #00ffd0;
+  }
+
+  h1 {
+    text-align: center;
+    padding: 20px;
+    font-weight: 400;
+    text-shadow: 0 0 10px #00ffd0;
+  }
+
+  .panel {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    display: grid;
+    grid-gap: 20px;
+  }
+
+  .fila {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .vfo-group-a, .vfo-group-b {
+    background: rgba(0,255,208,0.05);
+    border: 1px solid #00ffd0;
+    padding: 20px 30px;
+    border-radius: 20px;
+    text-align: center;
+    min-width: 180px;
+    box-shadow: 0 0 20px rgba(0,255,208,0.3);
+  }
+
+  .vfoa-title, .vfob-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #00ffd0;
+  }
+
+  .value {
+    font-size: 2em;
+    margin-bottom: 15px;
+  }
+
+  .digit { display: inline-block; width: 1em; text-align: center; }
+
+  button {
+    background: rgba(0,255,208,0.05);
+    border: 1px solid #00ffd0;
+    color: #00ffd0;
+    padding: 8px 15px;
+    margin: 5px 3px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s;
+    text-shadow: 0 0 3px #00ffd0;
+  }
+
+  button:hover {
+    background: #00ffd0;
+    color: #0f0f0f;
+    box-shadow: 0 0 15px #00ffd0;
+  }
+
+  .modo-group { display: flex; flex-wrap: wrap; justify-content: center; }
+
+  .indicadores-container {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .medidor {
+    position: relative;
+    border-radius: 50%;
+    background: #111;
+    box-shadow: 0 0 20px rgba(0,255,208,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+  }
+
+  .medidor canvas {
+    border-radius: 50%;
+  }
+
+  .indicador-title {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 600;
+    color: #00ffd0;
+  }
+
+  .horizontal { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+
+  .estado-panel { flex-wrap: wrap; gap: 15px; justify-content: center; }
+
+  .estado-card {
+    background: rgba(0,255,208,0.05);
+    border: 1px solid #00ffd0;
+    padding: 15px 20px;
+    border-radius: 15px;
+    min-width: 100px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0,255,208,0.2);
+  }
+
+  .estado-title { font-weight: 500; font-size: 0.9em; color: #aaaaaa; }
+  .estado-value { font-weight: 600; font-size: 1.2em; margin-top: 5px; }
+
+  .full-width { flex: 1 1 100%; }
+
+  #estado { text-align: center; margin: 20px 0; font-style: italic; color: #888; }
+
+  @media(max-width:768px) {
+    .fila { flex-direction: column; align-items: center; }
+    .medidor { width: 80%; }
+  }
+</style>
+</head>
+
+<body>
+<h1>uBitx v6 Futurista</h1>
+
+<div class="panel">
+
+  <div class="fila">
+    <div class="vfo-group-b">
+      <div class="vfob-title">VFO B</div>
+      <div class="value" id="fB">0</div>
+    </div>
+
+    <div class="vfo-group-a">
+      <div class="vfoa-title">VFO A</div>
+      <div class="value" id="fA_digits">
+        <span class="digit" data-index="0">0</span>
+        <span class="digit" data-index="1">0</span>
+        <span class="digit" data-index="2">0</span>.
+        <span class="digit" data-index="3">0</span>
+        <span class="digit" data-index="4">0</span>
+        <span class="digit" data-index="5">0</span>.
+        <span class="digit" data-index="6">0</span>
+        <span class="digit" data-index="7">0</span>
+        <span class="digit" data-index="8">0</span>
+      </div>
+      <div class="modo-group">
+        <button id="btnSSB" onclick="enviar('ssb','TOGGLE')">USB</button>
+        <button id="btnCW" onclick="enviar('cw','TOGGLE')">CW</button>
+        <button id="btnxxx" onclick="enviar('xxx','TOGGLE')">...</button>
+        <button id="btnba-" onclick="enviar('ba-')">Band-</button>
+        <button id="btnba+" onclick="enviar('ba+')">Band+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="fila">
+    <div class="indicadores-container">
+      <div class="medidor" style="width:160px; height:160px;">
+        <canvas id="pwrMeter" width="160" height="160"></canvas>
+        <div class="indicador-title">Potencia</div>
+      </div>
+
+      <div class="medidor" style="width:220px; height:220px;">
+        <canvas id="sMeter" width="220" height="220"></canvas>
+        <div class="indicador-title">S-Meter</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fila horizontal">
+    <button id="botonVfo" onclick="enviar('vfo','A')">VFO A</button>
+    <button id="botonRit" onclick="enviar('rit','TOGGLE')">RIT OFF</button>
+    <button id="botonSpl" onclick="enviar('spl','TOGGLE')">SPLIT OFF</button>
+    <button id="botonLock" onclick="enviar('lock','TOGGLE')">LOCK</button>
+    <a href="/sd"><button>Config</button></a>
+  </div>
+
+  <div class="fila estado-panel">
+    <div class="estado-card">
+      <div class="estado-title">Voltaje</div>
+      <div class="estado-value" id="volt">-- V</div>
+    </div>
+    <div class="estado-card">
+      <div class="estado-title">Corriente</div>
+      <div class="estado-value" id="curr">-- A</div>
+    </div>
+    <div class="estado-card">
+      <div class="estado-title">Tr.1</div>
+      <div class="estado-value" id="temp1">-- °C</div>
+    </div>
+    <div class="estado-card">
+      <div class="estado-title">Tr.2</div>
+      <div class="estado-value" id="temp2">-- °C</div>
+    </div>
+    <div class="estado-card">
+      <div class="estado-title">Reg.5v</div>
+      <div class="estado-value" id="temp3">-- °C</div>
+    </div>
+    <div class="estado-card">
+      <div class="estado-title">SWR</div>
+      <div class="estado-value" id="swr">--</div>
+    </div>
+    <div class="estado-card full-width">
+      <div class="estado-value" id="fechaHora">--:--:--</div>
+    </div>
+  </div>
+</div>
+
+<div id="estado">Esperando conexión...</div>
+
+<script>
+  function drawMeter(canvasId, value) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    const cx = w/2;
+    const cy = h/2;
+    const radius = Math.min(w,h)/2 - 10;
+
+    ctx.clearRect(0,0,w,h);
+
+    // Fondo
+    ctx.beginPath();
+    ctx.arc(cx,cy,radius,0,2*Math.PI);
+    ctx.fillStyle = '#111';
+    ctx.fill();
+    ctx.strokeStyle = '#00ffd0';
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    // Marcas
+    ctx.save();
+    ctx.translate(cx,cy);
+    for(let i=0;i<=10;i++){
+      const angle = Math.PI*0.75 + i*(Math.PI*1.5/10);
+      const x1 = radius*Math.cos(angle);
+      const y1 = radius*Math.sin(angle);
+      const x2 = (radius-10)*Math.cos(angle);
+      const y2 = (radius-10)*Math.sin(angle);
+      ctx.beginPath();
+      ctx.moveTo(x1,y1);
+      ctx.lineTo(x2,y2);
+      ctx.strokeStyle='#00ffd0';
+      ctx.lineWidth=2;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Aguja
+    const angle = Math.PI*0.75 + (Math.PI*1.5*value/100);
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate(angle);
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(radius-20,0);
+    ctx.strokeStyle='#ff0000';
+    ctx.lineWidth=3;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Simulación animada
+  let power = 0, sVal = 0;
+  setInterval(()=>{
+    power = (Math.sin(Date.now()/1000)*0.5+0.5)*100;
+    sVal = (Math.cos(Date.now()/1200)*0.5+0.5)*100;
+    drawMeter('pwrMeter', power);
+    drawMeter('sMeter', sVal);
+  },50);
+
+  // Reloj
+  setInterval(()=>{
+    const now = new Date();
+    const f = now.toLocaleTimeString();
+    document.getElementById('fechaHora').innerText = f;
+  },1000);
+
+  // Dummy enviar
+  function enviar(cmd,val){ console.log(cmd,val); }
+</script>
+</body>
+</html>
+

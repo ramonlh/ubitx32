@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <h1>uBitx v6</h1>
+  <h1>FA Radio</h1>
 
   <div class="panel">
 
@@ -35,15 +35,7 @@
 			<span class="digit" data-index="8">0</span>
 		</div>        
         
-        <div class="modo-group">
-          <button id="btnSSB" onclick="enviar('ssb', 'TOGGLE')">USB</button>
-          <button id="btnCW" onclick="enviar('cw', 'TOGGLE')">CW</button>
-          <button id="btnxxx" onclick="enviar('xxx', 'TOGGLE')">...</button>
-          <button id="btnba-" onclick="enviar('ba-')">Band-</button>
-          <button id="btnba+" onclick="enviar('ba+')">Band+</button>
-        </div>
-
-
+        <div><button id="botonModo" onclick="enviar('mode', 'TOGGLE')">Modo</button></div>
       </div>
     </div>
 
@@ -76,8 +68,7 @@
         <div><button id="botonVfo" onclick="enviar('vfo', 'A')">VFO A</button></div>
         <div><button id="botonRit" onclick="enviar('rit', 'TOGGLE')">RIT OFF</button></div>
         <div><button id="botonSpl" onclick="enviar('spl', 'TOGGLE')">SPLIT OFF</button></div>
-        <div><button id="botonLock" onclick="enviar('lock', 'TOGGLE')">LOCK</button></div>
-        <div><a href="/sd"><button>Config</button></a></div>
+        <div><button id="botonLock" onclick="enviar('lock', 'TOGGLE')">LOCK OFF</button></div>
       </div>
     </div>
 
@@ -108,15 +99,7 @@
           <div class="estado-title">SWR</div>
           <div class="estado-value" id="swr">--</div>
         </div>
-
-        <!-- NUEVO: Día y hora -->
-        <div class="estado-card full-width">
-          <div class="estado-title-value"><span class="estado-value" id="fechaHora">--:--:--</span>
-          </div>
-        </div>
-
-
-
+        <div><a href="/sd"><button>Config</button></a></div>
       </div>
     </div>
 
