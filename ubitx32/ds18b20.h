@@ -34,19 +34,19 @@ void initDS18B20()
   nTemp=sensors0.getDeviceCount();
   if(nTemp>maxTemp) { nTemp=maxTemp; }
 
-  Serial2.println(F("DS18B20 probes"));
-  Serial2.print(b); Serial2.print(b); Serial2.print(t(sondastemp));  Serial2.print(dp);
-  Serial2.print(nTemp); Serial2.print(crlf); Serial2.print(b); Serial2.print(b); Serial2.print(t(tModo));  Serial2.print(dp);
-  Serial2.print(b); Serial2.print(b); 
-  Serial2.println((sensors0.isParasitePowerMode())?c(tparasite):c(tpower));
+  s2(F("DS18B20 probes"));
+  s2(b); s2(b); s2(t(sondastemp));  s2(dp);
+  s2(nTemp); s2(crlf); s2(b); s2(b); s2(t(tModo));  s2(dp);
+  s2(b); s2(b); 
+  s2((sensors0.isParasitePowerMode())?c(tparasite):c(tpower)); s2(crlf);
   for(byte i=0; i<maxTemp; i++)       {   // busca sondas conectadas
     if (sensors0.getAddress(addr1Wire[i], i))    {
-      Serial2.print(b);Serial2.print(b);
-      for(uint8_t j=0; j<8; j++) { if(addr1Wire[i][j]<16) { Serial2.print(cero); } Serial2.print(addr1Wire[i][j]); }
-      Serial2.println();
+      s2(b);s2(b);
+      for(uint8_t j=0; j<8; j++) { if(addr1Wire[i][j]<16) { s2(cero); } s2(addr1Wire[i][j]); }
+      s2(crlf);
       }
     }
-  Serial2.println(F("  Started"));
+  s2(F("  Started"));s2(crlf);
 
 #endif
 }

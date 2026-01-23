@@ -1082,7 +1082,7 @@ void updateDisplay(byte alldata) {
   else if (tftpage==21) {  }   // select AP
   else if (tftpage==22)    // Mem display and select
     {
-    Serial2.println("tftpage=22");
+    s2("tftpage=22");s2(crlf);
     }
   else if (tftpage==23)    // test ports
     {

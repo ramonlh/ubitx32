@@ -34,7 +34,7 @@ void readSmeter()
 { 
 #ifdef ADS1X15
   int16_t smeteradc=0;
-  smeteradc=adsA.readADC_SingleEnded(SMETERp);    // es el valor leído del ADC sin convertir
+  //smeteradc=adsA.readADC_SingleEnded(SMETERp);    // es el valor leído del ADC sin convertir
   calSmeterReq=calSmeterReq || (smeteradc<conf.sMeterLevels[0]) || (smeteradc>conf.sMeterLevels[15]);
   smeteradc=smeteradc>smeterlast?((smeterlast*7+smeteradc*3))/10:   // valor ajustado para evitar variaciones rápidas
                                  ((smeterlast*9+smeteradc*1))/10;   // de VK2ETA

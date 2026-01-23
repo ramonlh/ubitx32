@@ -230,7 +230,7 @@ void checkButton(){
 // delay(50);
  keyStatus = getBtnStatus();   //will be remove 3 lines
  if (keyStatus == -1) return;
- Check_Cat(0);
+ //Check_Cat(0);
 }
 
 /************************************
@@ -440,7 +440,7 @@ void doMem()
     if (memlin<5) memlin++;
     if (mempos<maxMem) { mempos++; cambio=true; }
     }
-  Serial2.println(mempos);
+  s2(mempos);s2(crlf);
   if ((cambio) || (firstmem))
     { 
     firstmem=false;

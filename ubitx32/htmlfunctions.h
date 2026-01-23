@@ -95,10 +95,10 @@ void configurarHora() {
 }
 
 void leerYProcesarHTML(const char* ruta) {
-  //Serial2.println("leerYProcesarHTML");
+  //s2("leerYProcesarHTML\n");
   File archivo = FFat.open(ruta);
   if (!archivo || archivo.isDirectory()) {
-    //Serial2.println("No se pudo abrir el archivo");
+    //s2("No se pudo abrir el archivo\n");
     return;
     }
 
@@ -891,13 +891,13 @@ int checkInternet()
   msg=vacio;
   printP(barra);
   HTTPClient http;
-  Serial2.print("hostmyip:"); Serial2.println(conf.hostmyip);
+  s2("hostmyip:"); s2(conf.hostmyip);s2(crlf);
   http.begin("www.google.com", 80, msg);
   http.setConnectTimeout(2000);
-  Serial2.print("checkInternet ");Serial2.print("host:");Serial2.print("www.google.com");
-  Serial2.print(":");Serial2.print(80); Serial2.print(msg);Serial2.print("=");
+  s2("checkInternet ");s2("host:");s2("www.google.com");
+  s2(":");s2(80); s2(msg);s2("=");
   int httpCode=http.GET();
-  Serial2.print(" ");Serial2.println(httpCode);
+  s2(" ");s2(httpCode);s2(crlf);
   http.end();
   msg=vacio;
   return httpCode;

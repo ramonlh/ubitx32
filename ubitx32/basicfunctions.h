@@ -20,12 +20,22 @@ template <class T> int EEPROM_readAnything(int ee, T& value)
     return i;
 }
 
-void s2(String texto) { Serial2.print(texto); }
-void s2(char* texto) { Serial2.print(texto); }
-void s2(PGM_P texto) { Serial2.print(texto); }
-void s2(int valor) { Serial2.print(valor); }
-void s2(IPAddress ip) { Serial2.print(ip); }
-void s2h(int valor) { Serial2.print(valor,HEX); }
+//#define DEBUGSERIAL2
+#ifdef DEBUGSERIAL2
+  void s2(String texto) { Serial2.print(texto); }
+  void s2(char* texto) { Serial2.print(texto); }
+  void s2(PGM_P texto) { Serial2.print(texto); }
+  void s2(int valor) { Serial2.print(valor); }
+  void s2(IPAddress ip) { Serial2.print(ip); }
+  void s2h(int valor) { Serial2.print(valor,HEX); }
+#else
+  void s2(String texto) { Serial.print(texto); }
+  void s2(char* texto) { Serial.print(texto); }
+  void s2(PGM_P texto) { Serial.print(texto); }
+  void s2(int valor) { Serial.print(valor); }
+  void s2(IPAddress ip) { Serial.print(ip); }
+  void s2h(int valor) { Serial.print(valor,HEX); }
+#endif
 
 char* readdescr(char* namefile, byte ind, byte len)
 {
@@ -179,7 +189,7 @@ int readconfEEPROM()
 {
   int mysize=sizeof(conf);
   for (int i=0;i<mysize;i++) { buffconf[i]=EEPROM.read(i); }
-  Serial2.print("readconfEEPROM:");Serial2.println(mysize);
+  s2("readconfEEPROM:");s2(mysize);s2(crlf);
   return(mysize);
 }
 
@@ -205,6 +215,7 @@ void saveconf()
 
 int readconf()
 {
+
   int count=0;
   //initConf();
   File auxfile=FFat.open(fileconf,letrar);
@@ -283,7 +294,9 @@ void calcindices(int i)
   mival=server.arg(i).toInt();
 }
 
-void initSerial2(long baud) { Serial2.begin(baud, SERIAL_8N2, RXD2, TXD2); Serial2.flush(); }
+void initSerial2(long baud) { 
+  Serial2.begin(baud, SERIAL_8N2, RXD2, TXD2); Serial2.flush(); 
+}
 
 boolean checkfile(char* namefile)
 {  if (!FFat.exists(namefile)) { s2(namefile); s2(" no existe");  s2(crlf); return false; }  return true; }
@@ -388,7 +401,7 @@ void resetWiFi(void)
   strcpy(conf.passAP, t12341234);
   conf.canalAP=3;
   for (byte i=0; i<6; i++) strcpy(conf.EEmac[i],cero);
-  conf.staticIP=1;
+  conf.staticIP=0;
   conf.EEip={192,168,11,149};  
   conf.EEmask={255,255,255,0};
   conf.EEgw={192,168,11,1};
@@ -485,63 +498,6 @@ void printtiempo(unsigned long segundos)
       }
     }
 }
-
-/**void checkFlash()
-{
-  FSInfo fs_info;
-  FFat.info(fs_info);
-  
-  float fileTotalKB = (float)fs_info.totalBytes / 1024.0;
-  float fileUsedKB = (float)fs_info.usedBytes / 1024.0;
-  
-  float flashChipSize = (float)ESP.getFlashChipSize() / 1024.0 / 1024.0;
-  float realFlashChipSize = (float)ESP.getFlashChipRealSize() / 1024.0 / 1024.0;
-  float flashFreq = (float)ESP.getFlashChipSpeed() / 1000.0 / 1000.0;
-  FlashMode_t ideMode = ESP.getFlashChipMode();
-  Serial2.printf("\n#####################\n");
-  Serial2.printf("__________________________\n\n");
-  Serial2.println("Firmware: ");
-  Serial2.printf(" Chip Id: %08X\n", ESP.getChipId());
-  Serial2.print(" Core version: "); Serial2.println(ESP.getCoreVersion());
-  Serial2.print(" SDK version: "); Serial2.println(ESP.getSdkVersion());
-  Serial2.print(" Boot version: "); Serial2.println(ESP.getBootVersion());
-  Serial2.print(" Boot mode: "); Serial2.println(ESP.getBootMode());
-  Serial2.printf("__________________________\n\n");
-
-  Serial2.println("Flash chip information: ");
-  Serial2.printf(" Flash chip Id: %08X (for example: Id=001640E0 Manuf=E0, Device=4016 (swap bytes))\n", ESP.getFlashChipId());
-  Serial2.printf(" Sketch thinks Flash RAM is size: "); Serial2.print(flashChipSize); Serial2.println(" MB");
-  Serial2.print(" Actual size based on chip Id: "); Serial2.print(realFlashChipSize); Serial2.println(" MB ... given by (2^( "Device" - 1) / 8 / 1024");
-  Serial2.print(" Flash frequency: "); Serial2.print(flashFreq); Serial2.println(" MHz");
-  Serial2.printf(" Flash write mode: %s\n", (ideMode == FM_QIO ? "QIO" : ideMode == FM_QOUT ? "QOUT" : ideMode == FM_DIO ? "DIO" : ideMode == FM_DOUT ? "DOUT" : "UNKNOWN"));
-  Serial2.printf("__________________________\n\n");
-  Serial2.println("File system (FFat): ");
-  Serial2.print(" Total KB: "); Serial2.print(fileTotalKB); Serial2.println(" KB");
-  Serial2.print(" Used KB: "); Serial2.print(fileUsedKB); Serial2.println(" KB");
-  Serial2.printf(" Block size: %lu\n", fs_info.blockSize);
-  Serial2.printf(" Page size: %lu\n", fs_info.pageSize);
-  Serial2.printf(" Maximum open files: %lu\n", fs_info.maxOpenFiles);
-  Serial2.printf(" Maximum path length: %lu\n\n", fs_info.maxPathLength);
-  
-  Dir dir = FFat.openDir("/");
-  Serial2.println("FFat directory {/} :");
-  while (dir.next()) {
-    Serial2.print(" "); Serial2.println(dir.fileName());
-    Serial2.println(" "); Serial2.println(dir.fileSize());
-  }
-  Serial2.printf("__________________________\n\n");
-  Serial2.printf("CPU frequency: %u MHz\n\n", ESP.getCpuFreqMHz());
-  Serial2.print("#####################");
-  // open file for reading
-  File f = FFat.open("/login.txt", "r");
-  if (!f) { Serial2.println("file open failed"); } 
-  Serial2.println("====== Reading from FFat file =======");
-  // write 10 strings to file
-  for (int i=1; i<=10; i++){
-    String s=f.readStringUntil('\n');
-    Serial2.print(i); Serial2.print(":"); Serial2.println(s);
-    }
-}  **/
 
 String getHora() {
   time_t now = time(nullptr);

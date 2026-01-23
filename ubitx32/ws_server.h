@@ -29,7 +29,7 @@ void sendws(const char* tipo, T valor) {
   doc["v"] = valor;
   String json;
   serializeJson(doc, json);
-  //Serial2.print("Sent:"); Serial2.println(json); 
+  //s2("Sent:"); s2(json); s2(crlf);
   wsserver.broadcastTXT(json);
 }
 
@@ -109,13 +109,14 @@ void onWebSocketEvent(uint8_t clientNum, WStype_t type, uint8_t * payload, size_
   switch (type) {
     case WStype_CONNECTED: {
       IPAddress ip = wsserver.remoteIP(clientNum);
-      Serial2.printf("Cliente #%u conectado desde %s\n", clientNum, ip.toString().c_str());
+      s2("Cliente "); s2(clientNum); s2(" conectado desde "); s2(ip.toString().c_str());s2(crlf);
+      //Serial2.printf("Cliente #%u conectado desde %s\n", clientNum, ip.toString().c_str());
       // 🔄 Podés enviar estado inicial aquí:
       senwsdataini();
       break;
       }
     case WStype_DISCONNECTED:
-      Serial2.printf("Cliente #%u desconectado\n", clientNum);
+      s2("Cliente "); s2(clientNum); s2(" desconectado"); s2(crlf);
       break;
     case WStype_TEXT:
       Serial2.printf("Mensaje de #%u: %s\n", clientNum, payload);
@@ -124,7 +125,7 @@ void onWebSocketEvent(uint8_t clientNum, WStype_t type, uint8_t * payload, size_
       DeserializationError error = deserializeJson(doc, payload);
       // podés manejar comandos aquí también
       if (error) {
-        Serial2.println("Error al parsear JSON");
+        s2("Error al parsear JSON"); s2(crlf);
         return;
         }
 

@@ -159,6 +159,7 @@
       int udpPortFreq;
       uint8_t LIBRE5[363];                 // Reservados usos futuros
 } conftype;
+
       conftype conf;
       uint8_t *buffconf = (uint8_t *) &conf; // acceder a conf2 como bytes
 
@@ -431,13 +432,13 @@ void initConf()
   conf.EEdns2[0]=8;conf.EEdns2[1]=8;conf.EEdns2[2]=4;conf.EEdns2[3]=4;
   for (byte i=0;i<6;i++) strcpy(conf.EEmac[i],"00");   // 18 bytes, MAC
   strcpy(conf.myippub,"");              // 16 bytes, dirección IP pública
-  conf.staticIP=1;               // 1 byte, IP estática Sí/No
+  conf.staticIP=0;               // 1 byte, IP estática Sí/No
   conf.ftpenable=1;
   conf.debugenable=0;
-  conf.tcpenable=1;
-  conf.udpenable=1;
+  conf.tcpenable=0;
+  conf.udpenable=0;
   conf.wsenable=1;
-  conf.seripenable=0;
+  conf.seripenable=1;
   conf.webenable=1;
   memset(conf.LIBRE4,0,sizeof(conf.LIBRE4));
   conf.firstIF=45005000L;

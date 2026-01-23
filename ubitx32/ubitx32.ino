@@ -12,7 +12,6 @@
 #include "TimeLib.h"                  // Local
 #include "FS.h"
 #include "FFat.h"
-//#include "LittleFS.h"
 #include <HTTPClient.h>
 #include <EEPROM.h>
 #include <TFT_eSPI.h>     // Graphics and font library for ILI9341 driver chip
@@ -93,6 +92,7 @@ unsigned countloop=0;
 /* The settings are read from FILE  */
 void initSettings(){
   memset(spval,0,sizeof(spval));
+//  if (false)
   if (btnDown())
     {
     ////////////////////////////////////////////////////
@@ -191,23 +191,6 @@ void initPorts(){
   pinMode(CW_KEY, OUTPUT);     digitalWrite(CW_KEY, 0);
 }
 
-void task1() {
-  tini=millis();
-  readVIpower();
-  countfaulttime++;   // si se hace mayor que TempDesactPrg,desactiva ejecucion programas dependientes de fecha
-  if (inTx==1) {
-    leevaloresOW();
-    //sendTemp();
-    }
-  if ((tftpage!=21) && (tftpage!=22) &&(tftpage!=23))
-    displayStatus();
-  if(conf.rstper>0) { if(millis() > 3600000*conf.rstper) { Serial2.println("RESTART"); ESP.restart();  } }
-  sendwsData(tcpvtotvalue);
-  sendwsData(tcpitotvalue);
-  sendwsData(tcpfechahoravalue);
-  mact1=millis();
-}
-
 void handleWebclient() { server.handleClient(); }
 
 void initFFat(boolean testfiles, boolean format) {
@@ -215,8 +198,10 @@ void initFFat(boolean testfiles, boolean format) {
   if (FFat.begin(format)) { s2("OK\n"); } else  { s2("ERROR\n"); }
     size_t total = FFat.totalBytes();
   size_t used = FFat.usedBytes();
-  Serial2.printf("FFat total: %u bytes, usados: %u bytes, libres: %u bytes\n",
-                total, used, total - used);
+  s2("FFat total: ");s2(total);
+  s2(" usados: ");s2(used);
+  s2(" libres: ");s2(total-used);s2(crlf);
+
   if (testfiles) {
     File dir=FFat.open("/");
     File file=dir.openNextFile();
@@ -255,39 +240,79 @@ void execcomdebug() {
   if (done) { saveconf(); s2("Done"); s2(crlf); printstatus(); }
 }
 
-void handleSerial()
-{
-  if (Serial2.available()) 
-    {
-    boolean ejec=false;
-    char tChar = Serial2.read(); 
-    if (tChar=='\r')          // si es #13, CR
+#ifdef DEBUGSERIAL2
+  void handleSerial()
+  {
+    if (Serial2.available()) 
       {
-      char tCharTrash=Serial2.read();       // leemos #10 y ejecutamos
-      ejec=true;
-      }
-    else if (tChar=='\n') 
-      { ejec=true; }    // si es #10, hemos terminado y ejecutamos
-    else                    // si no es #10, lo añadimos
-      {
-      if (cinput=='\0') { cinput=tChar; }   // nuevo comando
-      else { sinput=sinput+tChar; }         // añadir al parámetro
-      } 
-    if (ejec)
-      {
-      if (conf.serial2Mode==0)    // modo debug
-        execcomdebug();
-      else
+      boolean ejec=false;
+      char tChar = Serial2.read(); 
+      if (tChar=='\r')          // si es #13, CR
         {
-        if ((conf.connMode==1) || (conf.connMode==2) || (conf.connMode==3))  // modo IP or Serial2-IP, mod Manager
-          {
-          //handleRecDataIP(cinput, sinput);  
-          }
+        char tCharTrash=Serial2.read();       // leemos #10 y ejecutamos
+        ejec=true;
         }
-      sinput=""; cinput='\0';  
+      else if (tChar=='\n') 
+        { ejec=true; }    // si es #10, hemos terminado y ejecutamos
+      else                    // si no es #10, lo añadimos
+        {
+        if (cinput=='\0') { cinput=tChar; }   // nuevo comando
+        else { sinput=sinput+tChar; }         // añadir al parámetro
+        } 
+      if (ejec)
+        {
+        if (conf.serial2Mode==0)    // modo debug
+          execcomdebug();
+        else
+          {
+          if ((conf.connMode==1) || (conf.connMode==2) || (conf.connMode==3))  // modo IP or Serial2-IP, mod Manager
+            {
+            //handleRecDataIP(cinput, sinput);  
+            }
+          }
+        sinput=""; cinput='\0';  
+        }
       }
-    }
-}
+  }
+#else
+  void handleSerial()
+  {
+    if (Serial.available()) 
+      {
+      boolean ejec=false;
+      char tChar = Serial.read(); 
+      if (tChar=='\r')          // si es #13, CR
+        {
+        char tCharTrash=Serial.read();       // leemos #10 y ejecutamos
+        ejec=true;
+        }
+      else if (tChar=='\n') 
+        { 
+        ejec=true; 
+        }    // si es #10, hemos terminado y ejecutamos
+      else                    // si no es #10, lo añadimos
+        {
+        if (cinput=='\0') { cinput=tChar; }   // nuevo comando
+        else { 
+          sinput=sinput+tChar; 
+        }         // añadir al parámetro
+        } 
+      if (ejec)
+        {
+        if (conf.serial2Mode==0)    // modo debug
+          execcomdebug();
+        else
+          {
+          if ((conf.connMode==1) || (conf.connMode==2) || (conf.connMode==3))  // modo IP or Serial2-IP, mod Manager
+            {
+            //handleRecDataIP(cinput, sinput);  
+            }
+          }
+        sinput=""; cinput='\0';  
+        }
+      }
+  }
+#endif
 
 void initTone()
 {
@@ -303,17 +328,20 @@ void initI2C()
 
 void setup()
 {
-  initSerial2(115200);  
   EEPROM.begin(EEPROM_SIZE);
-
+  #ifdef DEBUGSERIAL2  
+    initSerial2(115200);  
+    s2("  Serial 2 started\n");
+  #endif
+  delay(100);
   initConf();
   conf.connMode=0;
+
+  Init_Cat(38400, SERIAL_8N1);  s2("\n  Serial 1 started\n");
   s2("========== Init =========");s2(crlf);
-  Init_Cat(38400, SERIAL_8N1);  s2("  Serial 1 started\n");
-  s2("  Serial 2 started\n");
   s2("  Vers.:"); s2(FIRMWARE_VERSION_INFO); s2(crlf);
   delay(10);
-  initTFT();          s2("TFT started");s2(crlf);
+  initTFT(); s2("TFT started");s2(crlf);
   DisplayVersionInfo(FIRMWARE_VERSION_INFO);
   initFFat (true,true);  
   
@@ -326,8 +354,8 @@ void setup()
   //showSettings();
 
   initI2C();          s2("I2C started\n");;
-  initOscillators();  s2("Oscillators started\n");s2(crlf);
-  initTone();         s2("Pin Tone OK\n");s2(crlf);
+  initOscillators();  s2("Oscillators started\n");
+  initTone();         s2("Pin Tone OK\n");
   setFrequency(conf.frequency);  
   initDS18B20(); 
   leevaloresOW();  
@@ -374,6 +402,25 @@ void task01() {
   mact01=millis();
 }
 
+void task1() {
+  return;
+  tini=millis();
+  readVIpower();
+  countfaulttime++;   // si se hace mayor que TempDesactPrg,desactiva ejecucion programas dependientes de fecha
+  if (inTx==1) {
+    leevaloresOW();
+    //sendTemp();
+    }
+  if ((tftpage!=21) && (tftpage!=22) &&(tftpage!=23))
+    displayStatus();
+  if(conf.rstper>0) { if(millis() > 3600000*conf.rstper) { s2("RESTART"); s2(crlf); ESP.restart();  } }
+  sendwsData(tcpvtotvalue);
+  sendwsData(tcpitotvalue);
+  sendwsData(tcpfechahoravalue);
+  mact1=millis();
+}
+
+
 void task10() {
   tini=millis();
   if (inTx==0) leevaloresOW();
@@ -390,7 +437,7 @@ void loop()
 
   if (conf.webenable) handleWebclient();
   if (conf.wsenable) wsserver.loop(); 
-
+  
   if (isCWAutoMode==0)    //when CW AutoKey Mode, disable this process
     {
     if ((!txCAT) && (!txTFT)) { checkPTT(); }  
@@ -441,7 +488,7 @@ void loop()
         }
       } //end of check TX Status
     //we check CAT after the encoder as it might put the radio into TX
-    Check_Cat(inTx?1:0); // s2("Check_Cat");s2(crlf);
+    //Check_Cat(inTx?1:0); // s2("Check_Cat");s2(crlf);
     }
   else if (tftpage==22) 
     { doMem(); }    // Mem Mode

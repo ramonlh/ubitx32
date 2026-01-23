@@ -423,7 +423,7 @@ void cwKeyer(void){
           break;
       }
   
-      Check_Cat(2);
+      //Check_Cat(2);
     } //end of while
     }
   else      // not Iambic_Key
@@ -456,7 +456,7 @@ void cwKeyer(void){
           }
         return;                   //Tx stop control by Main Loop
         }
-      Check_Cat(2);
+      //Check_Cat(2);
       } //end of while
     }   //end of else
 }
@@ -478,7 +478,7 @@ byte delay_background(unsigned delayTime, byte fromType, byte swr)
         return 1;
       //Check PTT while auto Sending
       autoSendPTTCheck();
-      Check_Cat(3);
+      //Check_Cat(3);
       }
     else if (fromType == 3)   // KEYER
       {
@@ -491,7 +491,7 @@ byte delay_background(unsigned delayTime, byte fromType, byte swr)
     else
       {
       //Background Work      
-      Check_Cat(fromType);
+     //Check_Cat(fromType);
       }
     if (swr==1)   // SWR on
       {

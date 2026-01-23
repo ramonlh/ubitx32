@@ -201,7 +201,7 @@ uint32_t getValByKnob(int valueType, int targetValue, int minValue, int maxValue
       return targetValue;
     else if (auxres==1) 
       return antvalue;
-    Check_Cat(0);  //To prevent disconnections
+    //Check_Cat(0);  //To prevent disconnections
     }  
   s2("targetValue:"); s2(targetValue);s2(crlf);
   return targetValue;
